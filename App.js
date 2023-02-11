@@ -13,6 +13,7 @@ import {
   Provider as PaperProvider,
 } from 'react-native-paper';
 import MovieDetails from './pages/MovieDetails';
+import LogIn from './pages/LogIn';
 
 // import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // import MovieDetails from './pages/MovieDetails';
@@ -62,7 +63,7 @@ export default function App() {
           >
             <Tab.Screen name="Home" component={Home} 
             options={{
-              tabBarLabel: 'Home',
+              tabBarLabel: 'HomeL',
               tabBarIcon: ({ color, size }) => (
                 <MaterialCommunityIcons name="home" color={color} size={size} />
               ),
@@ -73,6 +74,14 @@ export default function App() {
               tabBarLabel: 'Movies',
               tabBarIcon: ({ color, size }) => (
                 <MaterialCommunityIcons name="filmstrip" color={color} size={size} />
+              ),
+            }}
+            />
+            <Tab.Screen name="LogInL" component={LogIn} 
+            options={{
+              tabBarLabel: 'Log In',
+              tabBarIcon: ({ color, size }) => (
+                <MaterialCommunityIcons name="account" color={color} size={size} />
               ),
             }}
             />
