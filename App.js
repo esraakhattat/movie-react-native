@@ -1,7 +1,7 @@
 // import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import MoviesList, { ListNavigator } from './pages/MoviesListPage';
+import { ListNavigator } from './pages/MoviesListPage';
 import Home from './pages/Home';
 // import { BlurView } from 'expo-blur';
 
@@ -12,24 +12,10 @@ import {
   MD3LightTheme as DefaultTheme,
   Provider as PaperProvider,
 } from 'react-native-paper';
-import MovieDetails from './pages/MovieDetails';
 import LogIn from './pages/LogIn';
-
-// import { createNativeStackNavigator } from '@react-navigation/native-stack';
-// import MovieDetails from './pages/MovieDetails';
-// import MovieCard from './components/MovieCard';
-
-
-// const Stack=createNativeStackNavigator()
-
-// function CardStackScreen() {
-//   return (
-//     <Stack.Navigator>
-//       <Stack.Screen name="card" component={MovieCard} />
-//       <Stack.Screen name="Details" component={MovieDetails} />
-//     </Stack.Navigator>
-//   );
-// }
+import store from './pages/Store/Store';
+import { Provider } from 'react-redux';
+import Favourites from './pages/Favourites';
 
 const Tab = createBottomTabNavigator();
 const theme = {
@@ -49,6 +35,7 @@ const theme = {
 
 export default function App() {
   return (
+    <Provider store={store}>
     <PaperProvider theme={theme}>
         <NavigationContainer theme={theme}>
           <Tab.Navigator
@@ -61,9 +48,9 @@ export default function App() {
             tabBarStyle: {backgroundColor:'#e91e63' },
           }}
           >
-            <Tab.Screen name="Home" component={Home} 
+            <Tab.Screen name="HomeL" component={Home} 
             options={{
-              tabBarLabel: 'HomeL',
+              tabBarLabel: 'Home',
               tabBarIcon: ({ color, size }) => (
                 <MaterialCommunityIcons name="home" color={color} size={size} />
               ),
@@ -77,6 +64,14 @@ export default function App() {
               ),
             }}
             />
+              <Tab.Screen name="FavouritesL" component={Favourites} 
+              options={{
+                tabBarLabel: 'Favourites',
+                tabBarIcon: ({ color, size }) => (
+                  <MaterialCommunityIcons name="star" color={color} size={size} />
+                ),
+              }}
+              />
             <Tab.Screen name="LogInL" component={LogIn} 
             options={{
               tabBarLabel: 'Log In',
@@ -89,6 +84,7 @@ export default function App() {
           
         </NavigationContainer>
     </PaperProvider>
+    </Provider>
   );
 }
 

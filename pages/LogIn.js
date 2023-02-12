@@ -44,7 +44,7 @@ function LogInPage({navigation}){
 
         }else{
             alert(`Hello, ${userName}`)
-            navigation.navigate("Home")
+            navigation.navigate("HomeL")
         }
     }
 

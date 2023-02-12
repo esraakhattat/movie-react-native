@@ -4,6 +4,10 @@ import { Text, View, StyleSheet, ScrollView, SafeAreaView } from "react-native";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import MovieDetails from "./MovieDetails";
 import { Button, Card, useTheme } from "react-native-paper";
+import { useDispatch, useSelector } from "react-redux";
+import { getMoviesList } from "./Store/actions/MovieAction";
+
+import MovieCard from "./MovieCard";
 const Stack = createNativeStackNavigator()
 export function ListNavigator() {
 
@@ -17,24 +21,21 @@ export function ListNavigator() {
 export default function MoviesList(props) {
     const theme = useTheme();
     const base_url="https://image.tmdb.org/t/p/w500";
+    const dispatch = useDispatch()
 
-    const [movies, setMovies] = useState([])
     useEffect(() => {
-        axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=9dee35d33d48888bd478fed31c90d916`)
-            .then((data) => setMovies(data.data.results))
-            .catch((err) => console.log(err))
+        dispatch(getMoviesList())
     }, [])
+    const movies=useSelector((state) => state.movieListR.movies)
+
+
+
+
     return (<ScrollView>
         <SafeAreaView style={styles.container}>
 
             <View>
-                {movies.map(movie => (<Card key={movie.id} type="elevated" style={{ backgroundColor: theme.colors.onBackground, marginTop: 20 }}>
-                    <Card.Cover style={styles.card} source={{ uri: `${base_url}${movie.poster_path}` }} />
-                    <Card.Content>
-                        <Text onPress={() => props.navigation.navigate('Details', { id: movie.id })} style={{ backgroundColor: theme.colors.onBackground, color: theme.colors.primary, fontWeight: 'bold', fontSize: 25 }} variant="titleLarge">{movie.title}</Text>
-                        <Text style={{ backgroundColor: theme.colors.onBackground, color: 'white' }} variant="bodyMedium">{movie.overview}</Text>
-                    </Card.Content>
-                </Card>))}
+                {movies.map(movie => (<MovieCard key={movie.id} singleMovie={movie.id} navigator={props.navigation}></MovieCard>))}
             </View>
 
         </SafeAreaView>
@@ -44,10 +45,5 @@ export default function MoviesList(props) {
 const styles = StyleSheet.create({
     container: {
         padding: 20
-    },
-    card: {
-        height: 450,
-
     }
-
 })
