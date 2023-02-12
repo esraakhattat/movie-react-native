@@ -23,7 +23,7 @@ function LogInPage({navigation}){
         if(e.length==0){
             setUserNameErr("This field is required")
         }else if(e.length<2){
-            setUserNameErr("Username length at least 2 characters")
+            setUserNameErr("username length should be at least 2 characters")
         }else{
             setUserNameErr("")
         }
@@ -33,7 +33,7 @@ function LogInPage({navigation}){
         if(e.length==0){
             setPasswordErr("This field is required")
         }else if(e.length<8){
-            setPasswordErr("password length at least 8 characters")
+            setPasswordErr("password length should be at least 8 characters")
         }else{
             setPasswordErr("")
         }

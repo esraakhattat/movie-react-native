@@ -14,7 +14,7 @@ import {
 } from 'react-native-paper';
 import LogIn from './pages/LogIn';
 import store from './pages/Store/Store';
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 import Favourites from './pages/Favourites';
 
 const Tab = createBottomTabNavigator();
@@ -29,14 +29,13 @@ const theme = {
     "border": 'rgb(199, 199, 204)',
     "card": '#e91e63',
     "text": "#ffd800",
+    "notification": "#273178"
   }
 };
-
-
-export default function App() {
-  return (
-    <Provider store={store}>
-    <PaperProvider theme={theme}>
+function Pages(){
+  const favCount = useSelector((state) => state.favCountR.favouriteCount)||0
+console.log(favCount);
+return <PaperProvider theme={theme}>
         <NavigationContainer theme={theme}>
           <Tab.Navigator
           // useLegacyImplementation
@@ -66,6 +65,7 @@ export default function App() {
             />
               <Tab.Screen name="FavouritesL" component={Favourites} 
               options={{
+                tabBarBadge: favCount?favCount:null,
                 tabBarLabel: 'Favourites',
                 tabBarIcon: ({ color, size }) => (
                   <MaterialCommunityIcons name="star" color={color} size={size} />
@@ -84,6 +84,13 @@ export default function App() {
           
         </NavigationContainer>
     </PaperProvider>
+}
+
+export default function App() {
+
+  return (
+    <Provider store={store}>
+    <Pages/>
     </Provider>
   );
 }
